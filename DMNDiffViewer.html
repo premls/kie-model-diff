@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .editor {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        height: 100vh;
+      }
+      .editor-left {
+        background-color: #aaa;
+        padding: 20px;
+        width: 50%;
+      }
+      .editor-right {
+        background-color: #bbb;
+        padding: 20px;
+        width: 50%;
+      }
+
+      div[data-ouia-component-id="docks-item-DiagramEditorPropertiesScreen"] {
+        display: none;
+      }
+
+      body > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(8) > div > div.docks-item-E-DiagramEditorPropertiesScreen {
+        display: none;
+      }
+    </style>
+
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kiegroup.github.io/kogito-online/standalone/dmn/index.js"></script>
+  </head>
+
+  <body>
+    <div class="editor">
+      <div class="editor-left" id="dmn-editor-container-left"></div>
+      <div class="editor-right" id="dmn-editor-container-right"></div>
+    </div>
+
+    <script>
+      const dmncontenturl = "https://raw.githubusercontent.com/premls/kie-model-diff/main/ClaimScrub.dmn";
+      const lefteditor = DmnEditor.open({
+        container: document.getElementById("dmn-editor-container-left"),
+        // initialContent: Promise.resolve(""),
+        initialContent: fetch(
+          dmncontenturl
+        ).then((content) => content.text()),
+        readOnly: false,
+      });
+
+      const righteditor = DmnEditor.open({
+        container: document.getElementById("dmn-editor-container-right"),
+        initialContent: fetch(
+          dmncontenturl
+        ).then((content) => content.text()),
+        readOnly: false,
+      });
+      $("iframe").on("load", function () {
+          $('div[data-ouia-component-id="docks-item-DiagramEditorPropertiesScreen"]').hide();
+      });
+
+      $('div[data-ouia-component-id="docks-item-DiagramEditorPropertiesScreen"]').hide(0).delay(5000).hide();
+    </script>
+  </body>
+</html>
